@@ -26,5 +26,6 @@ namespace WebApplication2
         }
     
         public virtual DbSet<tb_carro> tb_carro { get; set; }
+        public virtual DbSet<tb_filmes> tb_filmes { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="etecfp2023rodrigoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="etecfp2023rodrigoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tb_carro">
           <Key>
             <PropertyRef Name="id" />
@@ -14,11 +14,29 @@
           <Property Name="ano" Type="smallint" />
           <Property Name="cor" Type="varchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'etecfp2023rodrigo.dbo.tb_filmes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tb_filmes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" />
+          <Property Name="Lancamento" Type="int" />
+          <Property Name="Nota" Type="int" />
+        </EntityType>
         <EntityContainer Name="etecfp2023rodrigoModelStoreContainer">
           <EntitySet Name="tb_carro" EntityType="Self.tb_carro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_filmes" EntityType="Self.tb_filmes" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tb_filmes].[ID] AS [ID], 
+    [tb_filmes].[Nome] AS [Nome], 
+    [tb_filmes].[Lancamento] AS [Lancamento], 
+    [tb_filmes].[Nota] AS [Nota]
+    FROM [dbo].[tb_filmes] AS [tb_filmes]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="etecfp2023rodrigoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -33,7 +51,17 @@
         </EntityType>
         <EntityContainer Name="etecfp2023rodrigoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tb_carro" EntityType="Self.tb_carro" />
+          <EntitySet Name="tb_filmes" EntityType="etecfp2023rodrigoModel.tb_filmes" />
         </EntityContainer>
+        <EntityType Name="tb_filmes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lancamento" Type="Int32" />
+          <Property Name="Nota" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -47,6 +75,16 @@
                 <ScalarProperty Name="placa" ColumnName="placa" />
                 <ScalarProperty Name="ano" ColumnName="ano" />
                 <ScalarProperty Name="cor" ColumnName="cor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_filmes">
+            <EntityTypeMapping TypeName="etecfp2023rodrigoModel.tb_filmes">
+              <MappingFragment StoreEntitySet="tb_filmes">
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
+                <ScalarProperty Name="Lancamento" ColumnName="Lancamento" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
